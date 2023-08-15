@@ -148,6 +148,7 @@ function setupMap(center) {
       try {
         //Store polyline
         geocoderList = polyline.decode(event.route[0].geometry)
+        console.log(geocoderList)
 
         getWaypoints()
       }catch (err){
@@ -171,8 +172,7 @@ function getWaypoints(){
   for (let i = 0; i < geocoderList.length; i +=100) {
     latPoints.push(geocoderList[i][0]);
     lonPoints.push(geocoderList[i][1])
-   
-}
+  }
 console.log(latPoints)
 console.log(lonPoints)
 }
@@ -226,7 +226,7 @@ async function routeStations(){
 async function originStations(){
   jsonList = []
 
-  const res = await fetch(`https://api.tomtom.com/search/2/categorySearch/petrol-station.json?lat=${orgLat}&lon=${orgLon}&radius=2000&key=${gas_accessToken}`) 
+  const res = await fetch(`https://api.tomtom.com/search/2/categorySearch/petrol-station.json?lat=${orgLat}&lon=${orgLon}&radius=3500&key=${gas_accessToken}`) 
   response = await res.json();
   jsonList.push(response)
 
@@ -363,7 +363,7 @@ function setMarkers(data){
 }
 
 function timeMessage(){
-  if (document.getElementById('verdict-statement').innerText = 'Loading...'){
+  if (document.getElementById('verdict-statement').innerText == 'Loading...'){
     document.getElementById('verdict-statement').innerText = 'This is taking some time... Almost done'
   }
 }
