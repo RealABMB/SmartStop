@@ -10,6 +10,7 @@ gasStations = []
 let marker_list = []
 var buttonClicked = false
 var instructionsVariable
+var inProgress = false
 
 if (window.innerHeight < 500 || window.innerWidth < 1000){
   instructionsVariable = false
@@ -116,6 +117,11 @@ function setupMap(center) {
 
   directions.on('route', async (event) => {
     if (buttonClicked == true){
+      if (inProgress == true){
+        alert('Search is already in progress. Markers placed will now be relative to the original route.')
+        directions.removeRoutes()
+      } else{
+      inProgress = true
       buttonClicked = false
       gasStations = []
       let routes = event.route
@@ -148,12 +154,11 @@ function setupMap(center) {
       try {
         //Store polyline
         geocoderList = polyline.decode(event.route[0].geometry)
-        console.log(geocoderList)
 
         getWaypoints()
       }catch (err){
         console.log(err)
-      }
+      }}
     }else{
       alert('please check the kilometers you have available by clicking the button.')
       directions.removeRoutes()
@@ -172,7 +177,8 @@ function getWaypoints(){
   for (let i = 0; i < geocoderList.length; i +=100) {
     latPoints.push(geocoderList[i][0]);
     lonPoints.push(geocoderList[i][1])
-  }
+   
+}
 console.log(latPoints)
 console.log(lonPoints)
 }
@@ -275,6 +281,7 @@ function fetchStations(){
       clearInterval(myInterval);
       setMarkers(data)
     })
+    inProgress = false
   } catch(err){
     console.log(err) 
     myInterval = setInterval(fetchStations, 3000)  
