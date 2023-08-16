@@ -4,15 +4,10 @@
 import requests
 from bs4 import BeautifulSoup
 import time
-from app import gas_station_list as station_list
-
-
-gas_station_list = station_list
-
 
 headers = {'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:76.0) Gecko/20100101 Firefox/76.0'}
 
-def google_search():
+def google_search(gas_station_list):
     for gas_station in gas_station_list:
         try:
             if 'oops' in gas_station:
@@ -30,7 +25,7 @@ def google_search():
             pass
 
 
-def gas_buddy_search():
+def gas_buddy_search(gas_station_list):
     print(gas_station_list)
     global station_prices
     global index_values
