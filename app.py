@@ -3,12 +3,12 @@ app = Flask(__name__)
 import sys
 gas_station_list = []
 km_availiable = 2
-global first_time 
 first_time = True
 #import camera
 import time
 route_km = 1
 need_gas = False
+verdict = ''
 
 @app.route("/")
 def map():
@@ -16,7 +16,6 @@ def map():
 
 @app.route("/km_check", methods=['POST', 'GET'])
 def km_check():
-    global km_availiable
     km_availiable = -1
     value = request.form['numberValue']
     #camera.pictureSearch(pic_link)
@@ -61,7 +60,6 @@ def array_object():
 @app.route("/post_list", methods=['POST', 'GET'])
 def post_list():
     print(km_availiable)
-    global first_time
     global verdict
     if first_time == True and need_gas == True:
         final_list = [
@@ -81,7 +79,6 @@ def post_list():
 
 def prediction():
     import stock
-    global verdict
     if km_availiable <= (route_km + 5):   
         verdict = 'Fill gas nearby'
         scrape()
