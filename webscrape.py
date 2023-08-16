@@ -1,7 +1,9 @@
+
+
+
 import requests
 from bs4 import BeautifulSoup
 import time
-
 
 headers = {'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:76.0) Gecko/20100101 Firefox/76.0'}
 
@@ -53,8 +55,9 @@ def gas_buddy_search(gas_station_list):
                     price = price.split('¢', 1)[0]
                     print(price)
                     if x not in index_values:
-                        station_prices.append(price)
-                        index_values.append(x)
+                        if price != '- - -':
+                            station_prices.append(price)
+                            index_values.append(x)
 
         except Exception as err:
             print(err)
