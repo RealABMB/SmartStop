@@ -8,6 +8,7 @@ first_time = True
 #import camera
 import time
 route_km = 1
+need_gas = False
 
 @app.route("/")
 def map():
@@ -61,7 +62,6 @@ def array_object():
 def post_list():
     print(km_availiable)
     global first_time
-    global need_gas
     global verdict
     if first_time == True and need_gas == True:
         final_list = [
@@ -82,7 +82,6 @@ def post_list():
 def prediction():
     import stock
     global verdict
-    global need_gas
     if km_availiable <= (route_km + 5):   
         verdict = 'Fill gas nearby'
         scrape()
@@ -129,7 +128,6 @@ def print_options():
     print(f'{fifth_option} for around {fifth_option_gas}')
 
 def scrape():
-    global need_gas
     need_gas = True
     global first_option
     global second_option
