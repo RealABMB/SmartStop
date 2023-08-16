@@ -3,12 +3,10 @@ app = Flask(__name__)
 import sys
 gas_station_list = []
 km_availiable = 2
+global first_time 
 first_time = True
 #import camera
 import time
-route_km = 1
-need_gas = False
-verdict = ''
 
 @app.route("/")
 def map():
@@ -16,6 +14,7 @@ def map():
 
 @app.route("/km_check", methods=['POST', 'GET'])
 def km_check():
+    global km_availiable
     km_availiable = -1
     value = request.form['numberValue']
     #camera.pictureSearch(pic_link)
@@ -33,13 +32,15 @@ def km_check():
 
 @app.route("/distance_mesure", methods=['POST', 'GET'])
 def distance_mesure():
+    global route_km 
     route_km = request.form['distance'] 
     route_km = float(route_km)/1000
-    print(route_km, file=sys.stdout)
+    print(route_km)
     return redirect(request.referrer)
 
 @app.route("/km_object", methods=['POST', 'GET'])
 def km_object():
+    global route_km
     if km_availiable == -1:
         return{'value': 'Try Again'}
     elif km_availiable <= (route_km + 5):
@@ -53,13 +54,15 @@ def array_object():
     lists = request.get_json()
     for item in lists:
         gas_station_list.append(item['name'] + ' ' +  item['address'])
-    print(gas_station_list, file=sys.stdout)
+    print(gas_station_list)
     prediction()
     return render_template('map.html')
 
 @app.route("/post_list", methods=['POST', 'GET'])
 def post_list():
     print(km_availiable)
+    global first_time
+    global need_gas
     global verdict
     if first_time == True and need_gas == True:
         final_list = [
@@ -79,6 +82,8 @@ def post_list():
 
 def prediction():
     import stock
+    global verdict
+    global need_gas
     if km_availiable <= (route_km + 5):   
         verdict = 'Fill gas nearby'
         scrape()
@@ -125,6 +130,7 @@ def print_options():
     print(f'{fifth_option} for around {fifth_option_gas}')
 
 def scrape():
+    global need_gas
     need_gas = True
     global first_option
     global second_option
@@ -137,6 +143,7 @@ def scrape():
     global fourth_option_gas
     global fifth_option_gas
     import webscrape
+    reload(webscrape)
     webscrape.gas_buddy_search(gas_station_list)
     first_option = webscrape.first_option
     second_option = webscrape.second_option
