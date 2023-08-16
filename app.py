@@ -143,7 +143,6 @@ def scrape():
     global fourth_option_gas
     global fifth_option_gas
     import webscrape
-    reload(webscrape)
     webscrape.gas_buddy_search(gas_station_list)
     first_option = webscrape.first_option
     second_option = webscrape.second_option
