@@ -7,6 +7,7 @@ global first_time
 first_time = True
 #import camera
 import time
+route_km = 1
 
 @app.route("/")
 def map():
@@ -32,7 +33,6 @@ def km_check():
 
 @app.route("/distance_mesure", methods=['POST', 'GET'])
 def distance_mesure():
-    global route_km 
     route_km = request.form['distance'] 
     route_km = float(route_km)/1000
     print(route_km, file=sys.stdout)
@@ -40,7 +40,6 @@ def distance_mesure():
 
 @app.route("/km_object", methods=['POST', 'GET'])
 def km_object():
-    global route_km
     if km_availiable == -1:
         return{'value': 'Try Again'}
     elif km_availiable <= (route_km + 5):
