@@ -3,11 +3,15 @@ app = Flask(__name__)
 import sys
 gas_station_list = []
 km_availiable = 2
+global first_time
 first_time = True
 #import camera
 import time
+global need_gas
 need_gas = False
+global route_km
 route_km = 0
+global verdict
 verdict = ''
 
 @app.route("/")
