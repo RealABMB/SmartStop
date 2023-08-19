@@ -7,6 +7,19 @@ global first_time
 first_time = True
 #import camera
 import time
+global route_km
+global verdict
+global need_gas
+global first_option
+global second_option
+global third_option
+global fourth_option
+global fifth_option
+global first_option_gas
+global second_option_gas
+global third_option_gas
+global fourth_option_gas
+global fifth_option_gas
 
 
 @app.route("/")
