@@ -5,7 +5,7 @@ def predict_stock():
     dayofweek = dt.weekday()
     print(f'day of week is {dayofweek}')
 
-    if dayofweek == 6 or dayofweek == 0:
+    if dayofweek == 0 or dayofweek == 1:
         global difference
         difference = 0
     else:
