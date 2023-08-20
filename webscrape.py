@@ -25,7 +25,7 @@ def google_search(gas_station_list):
             pass
 
 
-def gas_buddy_search(gas_station_list):
+def gas_buddy_search(gas_station_list, fuel_type):
     print(gas_station_list)
     global station_prices
     global index_values
@@ -50,8 +50,8 @@ def gas_buddy_search(gas_station_list):
                     site = site.split('&', 1)[0]
                     response = requests.get(site, headers=headers)
                     soup = BeautifulSoup(response.content, 'html.parser')
-                    price = soup.find_all("span", {'class': 'FuelTypePriceDisplay-module__price___3iizb'}, limit=1)
-                    price = str(price[0].text)
+                    price = soup.find_all("span", {'class': 'FuelTypePriceDisplay-module__price___3iizb'}, limit=4)
+                    price = str(price[int(fuel_type)].text)
                     price = price.split('¢', 1)[0]
                     print(price)
                     if x not in index_values:
@@ -107,9 +107,3 @@ def get_output():
     third_option_gas = station_prices[2]
     fourth_option_gas = station_prices[3]
     fifth_option_gas =  station_prices[4]
-
-
-
-
-
-
