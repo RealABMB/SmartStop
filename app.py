@@ -3,25 +3,13 @@ app = Flask(__name__)
 import sys
 gas_station_list = []
 km_availiable = 2
-global first_time 
 first_time = True
-global fuel_type
 #import camera
 import time
-global route_km
 route_km = 0
-global verdict
-global need_gas
-global first_option
-global second_option
-global third_option
-global fourth_option
-global fifth_option
-global first_option_gas
-global second_option_gas
-global third_option_gas
-global fourth_option_gas
-global fifth_option_gas
+verdict = ''
+need_gas = False
+
 
 
 @app.route("/")
