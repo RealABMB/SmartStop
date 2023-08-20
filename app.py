@@ -5,6 +5,7 @@ gas_station_list = []
 km_availiable = 2
 global first_time 
 first_time = True
+global fuel_type
 #import camera
 import time
 global route_km
@@ -50,6 +51,13 @@ def distance_mesure():
     route_km = request.form['distance'] 
     route_km = float(route_km)/1000
     print(route_km)
+    return redirect(request.referrer)
+
+@app.route("/type_input", methods=['POST', 'GET'])
+def type_input():
+    global fuel_type
+    fuel_type = request.form['fuelType']
+    print(fuel_type, 'this is the value of fuel')
     return redirect(request.referrer)
 
 @app.route("/km_object", methods=['POST', 'GET'])
@@ -157,7 +165,7 @@ def scrape():
     global fourth_option_gas
     global fifth_option_gas
     import webscrape
-    webscrape.gas_buddy_search(gas_station_list)
+    webscrape.gas_buddy_search(gas_station_list, fuel_type)
     first_option = webscrape.first_option
     second_option = webscrape.second_option
     third_option = webscrape.third_option
