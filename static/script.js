@@ -14,6 +14,7 @@ var inProgress = false
 
 if (window.innerHeight < 500 || window.innerWidth < 1000){
   instructionsVariable = false
+  alert('For best experience, please use your phone in landscape mode.')
 }else{
   instructionsVariable = true
 }
@@ -86,6 +87,7 @@ km_button.addEventListener('click', async function() {
 
 function errorLocation() {
   setupMap([-2.24, 53.48])
+  alert('Please give the site access to your location. Otherwise you will have to tap on your location on the map then input your destination')
 }
 
 function setupMap(center) {
