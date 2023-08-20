@@ -84,8 +84,6 @@ km_button.addEventListener('click', async function() {
 };*/
   
 
-
-
 function errorLocation() {
   setupMap([-2.24, 53.48])
 }
@@ -142,6 +140,33 @@ function setupMap(center) {
         data: {"distance": distance}
       })
 
+      var typeOfFuel = document.querySelector('input[name="type"]:checked').value
+      if (typeOfFuel == 'Regular'){
+        $.ajax({
+          type: "POST",
+          url: "/type_input",
+          data: {"fuelType": 0}
+        })
+      } else if (typeOfFuel == 'Midgrade'){
+        $.ajax({
+          type: "POST",
+          url: "/type_input",
+          data: {"fuelType": 1}
+        })
+      } else if (typeOfFuel == 'Premium'){
+        $.ajax({
+          type: "POST",
+          url: "/type_input",
+          data: {"fuelType": 2}
+        })
+      } else if (typeOfFuel == 'Diesel'){
+        $.ajax({
+          type: "POST",
+          url: "/type_input",
+          data: {"fuelType": 3}
+        })
+      } 
+      
       fetch_km()
 
       orgLat = (directions.getOrigin()).geometry.coordinates[1]
