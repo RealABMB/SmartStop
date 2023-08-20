@@ -215,6 +215,28 @@
 		<h1>Info Will Go Below:</h1>
 		<h2>Note that prices may not be cent for cent accurate as they are not updated real time.</h2>
 		<h2>Despite inaccuracy in prices, the order represented in the table should indicate the cheapest options.</h2>
+		
+		<form style="margin-bottom: 3vh; margin-top: 1vh;">
+			<fieldset style="width:50%; display: inline;">
+			  <legend style="margin-bottom: 1vh; font-weight: 400;">Please select a fuel type.</legend>
+			  <div>
+				<input type="radio" id='reg-select' name="type" value="Regular" checked/>
+				<label for="reg-select">Regular</label>
+		  
+				<input type="radio" id='mid-select' name="type" value="Midgrade" />
+				<label for="mid-select">Midgrade</label>
+		  
+				<input type="radio" id='pre-select' name="type" value="Premium" />
+				<label for="pre-select">Premium</label>
+
+				<input type="radio" id='die-select' name="type" value="Diesel" />
+				<label for="die-select">Diesel</label>
+			  </div>
+			  <div>
+			  </div>
+			</fieldset>
+		  </form>
+
 		<table id="gas-table">
 			<tr>
 				<th>Station Name</th>
