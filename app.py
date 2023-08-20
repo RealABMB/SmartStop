@@ -9,6 +9,7 @@ global fuel_type
 #import camera
 import time
 global route_km
+route_km = 0
 global verdict
 global need_gas
 global first_option
