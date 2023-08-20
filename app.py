@@ -9,16 +9,7 @@ import time
 route_km = 0
 verdict = ''
 need_gas = False
-global first_option
-global second_option
-global third_option
-global fourth_option
-global fifth_option
-global first_option_gas
-global second_option_gas
-global third_option_gas
-global fourth_option_gas
-global fifth_option_gas
+
 
 
 @app.route("/")
