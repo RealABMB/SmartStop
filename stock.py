@@ -24,6 +24,8 @@ def predict_stock():
         for objects in prices:
             values.append(objects.text)
 
+        print(date_shown)
+        print(current_day.date())
         if date_shown == current_day.date():
             value_1 = values[14]
             value_2 = values[9]
