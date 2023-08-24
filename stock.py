@@ -1,6 +1,8 @@
 from datetime import datetime, timedelta
+import pytz
 def predict_stock():
-    current_day = datetime.now() 
+    est = pytz.timezone('US/Eastern')
+    current_day = datetime.now(est) 
     print(current_day)
     dt = current_day + timedelta(1)
     dayofweek = dt.weekday()
