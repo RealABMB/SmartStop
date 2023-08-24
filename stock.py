@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 def predict_stock():
     current_day = datetime.now() 
+    print(current_day)
     dt = current_day + timedelta(1)
     dayofweek = dt.weekday()
     print(f'day of week is {dayofweek}')
@@ -26,7 +27,7 @@ def predict_stock():
 
         print(date_shown)
         print(current_day.date())
-        if date_shown == current_day.date():
+        if date_shown == current_day.date()
             value_1 = values[14]
             value_2 = values[9]
         else:
