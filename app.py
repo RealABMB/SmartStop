@@ -89,7 +89,7 @@ def post_list():
     elif need_gas == False:
         return {'verdict': verdict}
     else:
-        return jibergr
+        return redirect(request.referrer)
 
 def prediction():
     import stock
