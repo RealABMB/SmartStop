@@ -118,7 +118,7 @@ def prediction():
             if decimal == 0.5:
                 prediction -= 0.5
             else:
-                round(prediction)
+                prediction = round(prediction)
             verdict = (f'Gas prices will decrease by around {(prediction)} cent(s) tomorrow, wait till tomorrow to fill gas')
 
         elif prediction >= 0.5:
@@ -127,7 +127,7 @@ def prediction():
             if decimal == 0.5:
                 prediction += 0.5
             else:
-                round(prediction)
+                prediction = round(prediction)
             verdict = (f'Gas prices will increase by around {(prediction)} cent(s) tomorrow, fill gas anywhere along the route')
             scrape()
             print_options()
