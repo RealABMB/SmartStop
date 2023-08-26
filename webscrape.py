@@ -1,9 +1,8 @@
 
-
-
 import requests
 from bs4 import BeautifulSoup
 import time
+from concurrent.futures import ThreadPoolExecutor
 
 headers = {'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:76.0) Gecko/20100101 Firefox/76.0'}
 
@@ -24,48 +23,55 @@ def google_search(gas_station_list):
             print('station price not found')
             pass
 
+def get_station_links(gas_station):
+    global x
+    global fuel_type_v
+    try:
+        if 'Oops' in gas_station:
+            gas_station = gas_station.replace('Oops', 'Mr Gas')
+
+        response = requests.get(f'https://www.google.com/search?q={gas_station} gas', headers=headers)
+        soup = BeautifulSoup(response.content, 'html.parser')
+        links = soup.find_all('a', href=True)
+
+        for link in links:
+            if 'gasbuddy' in link["href"]:
+                site = link["href"]
+                response = requests.get(site, headers=headers)
+                soup = BeautifulSoup(response.content, 'html.parser')
+                price = soup.find_all("span", {'class': 'FuelTypePriceDisplay-module__price___3iizb'}, limit=4)
+                price = str(price[int(fuel_type_v)].text)
+                price = price.split('¢', 1)[0]
+                print(price)
+                if x not in index_values:
+                    if price != '- - -':
+                        station_prices.append(price)
+                        index_values.append(x)           
+    except Exception as err:
+        print(err)
+        print('station price not found', x) 
+    x += 1 
+    
 
 def gas_buddy_search(gas_station_list, fuel_type):
-    print(gas_station_list)
+    global fuel_type_v
+    fuel_type_v = fuel_type
+    global x 
+    x = 0
+    print(gas_station_list, 'this the shtlajt')
     global station_prices
     global index_values
     station_prices = []
     index_values = []
     station_prices.clear()
     index_values.clear()
-    x = 0
-    for gas_station in gas_station_list:
-        try:
-            if 'Oops' in gas_station:
-                gas_station = gas_station.replace('Oops', 'Mr Gas')
+    with ThreadPoolExecutor(max_workers=5) as p:
+        p.map(get_station_links, gas_station_list)
 
-            response = requests.get(f'https://www.google.com/search?q={gas_station} gas')
-            soup = BeautifulSoup(response.content, 'html.parser')
-            links = soup.find_all('a', href=True)
-
-            for link in links:
-                if 'gasbuddy' in link["href"]:
-                    site = link["href"]
-                    site = site.split('=', 1)[1]
-                    site = site.split('&', 1)[0]
-                    response = requests.get(site, headers=headers)
-                    soup = BeautifulSoup(response.content, 'html.parser')
-                    price = soup.find_all("span", {'class': 'FuelTypePriceDisplay-module__price___3iizb'}, limit=4)
-                    price = str(price[int(fuel_type)].text)
-                    price = price.split('¢', 1)[0]
-                    print(price)
-                    if x not in index_values:
-                        if price != '- - -':
-                            station_prices.append(price)
-                            index_values.append(x)
-
-        except Exception as err:
-            print(err)
-            print('station price not found', x) 
-        x += 1    
     print(index_values, station_prices)
     get_output()
     print(index_values, station_prices)
+
 
 def sort_list(list1, list2):
     zipped_pairs = []
