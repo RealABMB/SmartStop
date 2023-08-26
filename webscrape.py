@@ -24,7 +24,6 @@ def google_search(gas_station_list):
             pass
 
 def get_station_links(gas_station):
-    global x
     global fuel_type_v
     try:
         if 'Oops' in gas_station:
@@ -33,7 +32,7 @@ def get_station_links(gas_station):
         response = requests.get(f'https://www.google.com/search?q={gas_station} gas', headers=headers)
         soup = BeautifulSoup(response.content, 'html.parser')
         links = soup.find_all('a', href=True)
-
+        print(gas_station)
         for link in links:
             if 'gasbuddy' in link["href"]:
                 site = link["href"]
@@ -43,34 +42,68 @@ def get_station_links(gas_station):
                 price = str(price[int(fuel_type_v)].text)
                 price = price.split('¢', 1)[0]
                 print(price)
-                if x not in index_values:
+                if gas_station not in repeated_values:
                     if price != '- - -':
-                        station_prices.append(price)
-                        index_values.append(x)           
+                        station_prices.append(Stations_Prices(price, gas_station))
+                        repeated_values.append(gas_station)    
+
     except Exception as err:
         print(err)
         print('station price not found', x) 
-    x += 1 
     
+class Stations:
+    def __init__(self, index, name):
+        self.index = index
+        self.name = name
+
+class Stations_Prices:
+    def __init__(self, price, name):
+        self.price = price
+        self.name = name
+
+final_gas_stations_list = []
 
 def gas_buddy_search(gas_station_list, fuel_type):
     global fuel_type_v
     fuel_type_v = fuel_type
-    global x 
     x = 0
-    print(gas_station_list, 'this the shtlajt')
+
+    for places in gas_station_list:
+        print(places)
+        final_gas_stations_list.append(Stations(x, places))
+        x += 1
+
     global station_prices
-    global index_values
+    global repeated_values
+
+    repeated_values = []
     station_prices = []
+
+    global index_values
+    global price_list
+
     index_values = []
+    price_list = []
+
     station_prices.clear()
     index_values.clear()
+    repeated_values.clear()
+    price_list.clear()
+
+    
     with ThreadPoolExecutor(max_workers=5) as p:
         p.map(get_station_links, gas_station_list)
+    
+    for obj in station_prices:
+        for value in final_gas_stations_list:
+            if value.name == obj.name:
+                price_list.append(obj.price)
+                index_values.append(value.index)
 
-    print(index_values, station_prices)
+    
+    print(index_values, price_list)
     get_output()
-    print(index_values, station_prices)
+    print(index_values, price_list)
 
 
 def sort_list(list1, list2):
@@ -86,13 +119,14 @@ def sort_list(list1, list2):
     return z
 
 def get_output():
-    global station_prices
+    global price_list
     global index_values
-    index_values = sort_list(index_values, station_prices)
-    station_prices.sort()
-    if float(station_prices[0]) < (float(station_prices[1]) - 3):
-        del station_prices[0]
+    index_values = sort_list(index_values, price_list)
+    price_list.sort()
+    if float(price_list[0]) < (float(price_list[1]) - 3):
+        del price_list[0]
         del index_values[0]
+        
     global first_option
     global second_option
     global third_option
@@ -108,8 +142,8 @@ def get_output():
     third_option = index_values[2]
     fourth_option = index_values[3]
     fifth_option = index_values[4]
-    first_option_gas = station_prices[0]
-    second_option_gas = station_prices[1]
-    third_option_gas = station_prices[2]
-    fourth_option_gas = station_prices[3]
-    fifth_option_gas =  station_prices[4]
+    first_option_gas = price_list[0]
+    second_option_gas = price_list[1]
+    third_option_gas = price_list[2]
+    fourth_option_gas = price_list[3]
+    fifth_option_gas =  price_list[4]
