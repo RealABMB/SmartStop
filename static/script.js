@@ -126,7 +126,8 @@ function setupMap(center) {
       gasStations = []
       let routes = event.route
       document.getElementById('verdict-statement').innerText = 'Loading...'
-      window.setTimeout(timeMessage, 20000)
+      window.setTimeout(timeMessage, 10000)
+      window.setTimeout(timeMessageError, 20000)
       if (marker_list.length !== 0) {
         for (var l = marker_list.length - 1; l >= 0; l--) {
             marker_list[l].remove()
@@ -225,6 +226,7 @@ async function routeStations(){
     }
 
   for (let i = 0; i < latPoints.length; i++){
+    await sleep(0.4)
     jsonList = []
     const res = await fetch(`https://api.tomtom.com/search/2/categorySearch/petrol-station.json?lat=${latPoints[i]}&lon=${lonPoints[i]}&radius=3500&key=${gas_accessToken}`) 
     response = await res.json();
@@ -254,6 +256,7 @@ async function routeStations(){
     dataType: 'json' 
   })
   console.log(gasStations)
+  
 }
 
 async function originStations(){
@@ -281,7 +284,6 @@ async function originStations(){
   })
 
   console.log(gasStations)
-  
 }
 
 var km_left;
@@ -291,10 +293,10 @@ function fetch_km() {
     console.log(data)
     if (data['value'] == 'True'){
       originStations()
-      myInterval = setInterval(fetchStations, 10000)
+      myInterval = setInterval(fetchStations, 5000)
     } else if (data['value'] == 'False'){
       routeStations()
-      myInterval = setInterval(fetchStations, 10000)
+      myInterval = setInterval(fetchStations, 5000)
     } else{
       alert('Please take another picture, it was not clear enough to read')
     }
@@ -311,7 +313,7 @@ function fetchStations(){
     inProgress = false
   } catch(err){
     console.log(err) 
-    myInterval = setInterval(fetchStations, 3000)  
+    myInterval = setInterval(fetchStations, 5000)  
   }
   
 }
@@ -400,4 +402,14 @@ function timeMessage(){
   if (document.getElementById('verdict-statement').innerText == 'Loading...'){
     document.getElementById('verdict-statement').innerText = 'This is taking some time... Almost done'
   }
+}
+
+function timeMessageError(){
+  if (document.getElementById('verdict-statement').innerText == 'This is taking some time... Almost done'){
+    document.getElementById('verdict-statement').innerText = 'There was an error in showing your results. Please refresh the page and try again.'
+  }
+}
+
+async function sleep(seconds){
+  return new Promise((resolve) => setTimeout(resolve, seconds * 1000))
 }
