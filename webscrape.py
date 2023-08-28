@@ -49,7 +49,7 @@ def get_station_links(gas_station):
 
     except Exception as err:
         print(err)
-        print('station price not found', x) 
+        print('station price not found', gas_station) 
     
 class Stations:
     def __init__(self, index, name):
@@ -67,6 +67,8 @@ def gas_buddy_search(gas_station_list, fuel_type):
     global fuel_type_v
     fuel_type_v = fuel_type
     x = 0
+
+    final_gas_stations_list.clear()
 
     for places in gas_station_list:
         print(places)
