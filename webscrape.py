@@ -39,13 +39,23 @@ def get_station_links(gas_station):
                 response = requests.get(site, headers=headers)
                 soup = BeautifulSoup(response.content, 'html.parser')
                 price = soup.find_all("span", {'class': 'FuelTypePriceDisplay-module__price___3iizb'}, limit=4)
+                update = soup.find_all("p", {'class': 'FuelTypePriceDisplay-module__reportedTime___1Zinr'}, limit=4)
+                update = str(update[int(fuel_type_v)].text)
                 price = str(price[int(fuel_type_v)].text)
                 price = price.split('¢', 1)[0]
                 print(price)
                 if gas_station not in repeated_values:
                     if price != '- - -':
-                        station_prices.append(Stations_Prices(price, gas_station))
-                        repeated_values.append(gas_station)    
+                        if 'hour' in update or 'hours' in update:
+                            update_int = update.split(' ', 1)[0]
+                            if int(update_int) <= 12:
+                                station_prices.append(Stations_Prices(price, gas_station))
+                                repeated_values.append(gas_station)    
+                        elif 'day' in update or 'days' in update:
+                            pass
+                        else:
+                            station_prices.append(Stations_Prices(price, gas_station))
+                            repeated_values.append(gas_station)    
 
     except Exception as err:
         print(err)
