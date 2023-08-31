@@ -2,6 +2,7 @@ var orgLat
 var orgLon
 var destLat
 var destLon
+var distance
 latPoints = []
 lonPoints = []
 geocoderList = []
@@ -126,8 +127,8 @@ function setupMap(center) {
       gasStations = []
       let routes = event.route
       document.getElementById('verdict-statement').innerText = 'Loading...'
-      window.setTimeout(timeMessage, 10000)
-      window.setTimeout(timeMessageError, 20000)
+      window.setTimeout(timeMessage, 15000)
+      window.setTimeout(timeMessageError, 30000)
       if (marker_list.length !== 0) {
         for (var l = marker_list.length - 1; l >= 0; l--) {
             marker_list[l].remove()
@@ -135,7 +136,7 @@ function setupMap(center) {
     }
 
       // Each route object has a distance property
-      var distance = (routes.map(r => r.distance)[0])
+      distance = (routes.map(r => r.distance)[0])
       console.log(distance)
       $.ajax({
         type: "POST",
@@ -202,7 +203,12 @@ function successLocation(position) {
 function getWaypoints(){
   latPoints = []
   lonPoints = []
-  for (let i = 0; i < geocoderList.length; i +=100) {
+  if (distance > 100){
+    interval = 200
+  } else{
+    interval = 100
+  }
+  for (let i = 0; i < geocoderList.length; i +=interval) {
     latPoints.push(geocoderList[i][0]);
     lonPoints.push(geocoderList[i][1])
    
