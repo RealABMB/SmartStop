@@ -141,7 +141,8 @@ function setupMap(center) {
       $.ajax({
         type: "POST",
         url: "/distance_mesure",
-        data: {"distance": distance}
+        data: {"distance": distance},
+        timeout: 3000
       })
 
       var typeOfFuel = document.querySelector('input[name="type"]:checked').value
