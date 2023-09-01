@@ -48,6 +48,7 @@ def get_station_links(gas_station):
                     if price != '- - -':
                         if 'hour' in update or 'hours' in update:
                             update_int = update.split(' ', 1)[0]
+                            print(update_int, 'this is update')
                             if int(update_int) <= 12:
                                 station_prices.append(Stations_Prices(price, gas_station))
                                 repeated_values.append(gas_station)    
@@ -149,13 +150,46 @@ def get_output():
     global third_option_gas
     global fourth_option_gas
     global fifth_option_gas
-    first_option = index_values[0]
-    second_option = index_values[1]
-    third_option = index_values[2]
-    fourth_option = index_values[3]
-    fifth_option = index_values[4]
-    first_option_gas = price_list[0]
-    second_option_gas = price_list[1]
-    third_option_gas = price_list[2]
-    fourth_option_gas = price_list[3]
-    fifth_option_gas =  price_list[4]
+    try:
+        first_option = index_values[0]
+        first_option_gas = price_list[0]
+    except:
+        first_option = 'no options found'
+        first_option_gas = 'n/a'
+
+    try:
+        second_option = index_values[1]
+        second_option_gas = price_list[1]
+    except:
+        second_option = 'no options found'
+        second_option_gas = 'n/a'
+    
+    
+    try:
+        third_option = index_values[2]
+        third_option_gas = price_list[2]
+    except:
+        third_option = 'no options found'
+        third_option_gas = 'n/a'
+       
+    
+    try:   
+        fourth_option = index_values[3]
+        fourth_option_gas = price_list[3]
+    except:
+        fourth_option = 'no options found'
+        fourth_option_gas = 'n/a'
+       
+
+    try:    
+        fifth_option = index_values[4]
+        fifth_option_gas =  price_list[4]
+    except:
+        fifth_option = 'no options found'
+        fifth_option_gas = 'n/a'
+
+   
+   
+    
+    
+    
