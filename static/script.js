@@ -30,6 +30,7 @@ navigator.geolocation.getCurrentPosition(successLocation, errorLocation, {
 
 
 let km_button = document.getElementById("km-button");
+let predict_button = document.getElementById("predict-button")
 /*let video = document.querySelector("#video");
 let canvas = document.querySelector("#canvas");
 let kmImage = document.getElementById("km-image")*/
@@ -69,6 +70,13 @@ km_button.addEventListener('click', async function() {
       buttonClicked = false
     }*/
 });
+
+predict_button.addEventListener('click', async function(){
+  fetch("/predict_price").then(response => response.json()).then(function(data){
+    console.log(data)
+    alert(data['tomorrowPrice'])
+  });
+})
   
 /*function takePicture() {
       canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
