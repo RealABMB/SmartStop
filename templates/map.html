@@ -110,20 +110,27 @@
 			background-color: rgb(5, 143, 189);
 		}
 
-		#video{
-			width: 50%;
-			height: 50%;
-		}
+		#predict-button{
+            margin-top: 5%;
+            height: 100px;
+            width: 200px;
+            color: black;
+            font-size: 20px;
+            background-color:rgb(68, 0, 255);
+            margin-bottom: 3%;
+            color: white;
+        }
 
-		#canvas{
-			width: 50%;
-			height: 50%;
-		}
 
-		#km-image{
-			width: 50%;
-			height: 50%;
-		}
+        #predict-button:hover{
+            background-color: rgb(68, 0, 218);
+        }
+
+
+        #predict-button:active {
+            background-color: rgb(68, 0, 189);
+        }
+
 
 	.popup-close{
     cursor : pointer;
@@ -283,9 +290,8 @@
 
 		</table>
 		<p id="verdict-statement"></p>
-        <video id="video"  autoplay hidden></video>
-        <canvas id="canvas"  hidden></canvas>
-		<img id="km-image" >
+		<button type='button' id="predict-button">Predict tomorrow's gas prices</button>
+       
 	</div>
 
 	<div id="km-popup" class="popup-container" hidden>
@@ -305,4 +311,3 @@
 </body>
 <script src="{{ url_for('static', filename='script.js') }}"></script>	
 </html>
-
