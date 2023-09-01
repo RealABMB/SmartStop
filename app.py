@@ -32,7 +32,35 @@ def km_check():
     km_availiable = int(value)
     return redirect(request.referrer)
 
-    
+@app.route("/predict_price", methods=['POST', 'GET'])   
+def predict_price():
+    import stock
+    stock.predict_stock()
+    prediction = stock.difference
+
+    if  prediction <= -0.5: 
+        prediction = round(prediction, 1)
+        decimal = prediction % 1
+        if decimal == 0.5:
+            prediction -= 0.5
+        else:
+            prediction = round(prediction)
+        answer = (f'Gas prices will decrease by around {(prediction)} cent(s) tomorrow.')
+
+    elif prediction >= 0.5:
+        prediction = round(prediction, 1)
+        decimal = prediction % 1
+        if decimal == 0.5:
+            prediction += 0.5
+        else:
+            prediction = round(prediction)
+        answer = (f'Gas prices will increase by around {(prediction)} cent(s) tomorrow.')
+    else:
+         answer = (f'Gas prices will stay the same tomorrow.')
+    return {'tomorrowPrice': answer}
+
+
+
 
 @app.route("/distance_mesure", methods=['POST', 'GET'])
 def distance_mesure():
