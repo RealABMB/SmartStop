@@ -338,17 +338,7 @@ function setMarkers(data){
   var verdictText = document.getElementById('verdict-statement')
   const colors = ['#09de33', '#7ede09', '#bade09', '#debe09', '#de3309']
   try{
-    for (let x = 0; x < data.length; x++){
-      y = data[x]['index']
-      markers = new mapboxgl.Marker({
-        color: colors[x],
-        draggable: false, 
-    })
 
-    markers.setLngLat([gasStations[y].lon, gasStations[y].lat])
-    .addTo(map);
-    marker_list.push(markers)
-    }
     verdictText.innerText = data[0]['verdict']
     a = data[0]['index']
     b = data[1]['index']
@@ -356,30 +346,112 @@ function setMarkers(data){
     d = data[3]['index']
     e = data[4]['index']
 
-    document.getElementById('row-1-name').innerText = gasStations[a].name
-    document.getElementById('row-1-address').innerText = gasStations[a].address
-    document.getElementById('row-1-price').innerText = data[0]['price'] + '¢'
-    document.getElementById('row-1-distance').innerText = gasStations[a].dist + 'm'
+    try{
+      document.getElementById('row-1-name').innerText = gasStations[a].name
+      document.getElementById('row-1-address').innerText = gasStations[a].address
+      document.getElementById('row-1-price').innerText = data[0]['price'] + '¢'
+      document.getElementById('row-1-distance').innerText = gasStations[a].dist + 'm'
 
-    document.getElementById('row-2-name').innerText = gasStations[b].name
-    document.getElementById('row-2-address').innerText = gasStations[b].address
-    document.getElementById('row-2-price').innerText = data[1]['price'] + '¢'
-    document.getElementById('row-2-distance').innerText = gasStations[b].dist + 'm'
+      markers = new mapboxgl.Marker({
+        color: colors[0],
+        draggable: false, 
+    })
 
-    document.getElementById('row-3-name').innerText = gasStations[c].name
-    document.getElementById('row-3-address').innerText = gasStations[c].address
-    document.getElementById('row-3-price').innerText = data[2]['price'] + '¢'
-    document.getElementById('row-3-distance').innerText = gasStations[c].dist + 'm'
+     markers.setLngLat([gasStations[a].lon, gasStations[a].lat])
+     .addTo(map);
+     marker_list.push(markers)
+    } catch{
+      document.getElementById('row-1-name').innerText = 'no option found'
+      document.getElementById('row-1-address').innerText = 'n/a'
+      document.getElementById('row-1-price').innerText = 'n/a'
+      document.getElementById('row-1-distance').innerText = 'n/a'
 
-    document.getElementById('row-4-name').innerText = gasStations[d].name
-    document.getElementById('row-4-address').innerText = gasStations[d].address
-    document.getElementById('row-4-price').innerText = data[3]['price'] + '¢'
-    document.getElementById('row-4-distance').innerText = gasStations[d].dist + 'm'
+      alert('No options were found, either all gas prices are outdated or data is not available. You can try visitng a gas station to find the price or select a different fuel type.')
+    }
+   
+    try{
+      document.getElementById('row-2-name').innerText = gasStations[b].name
+      document.getElementById('row-2-address').innerText = gasStations[b].address
+      document.getElementById('row-2-price').innerText = data[1]['price'] + '¢'
+      document.getElementById('row-2-distance').innerText = gasStations[b].dist + 'm'
 
-    document.getElementById('row-5-name').innerText = gasStations[e].name
-    document.getElementById('row-5-address').innerText = gasStations[e].address
-    document.getElementById('row-5-price').innerText = data[4]['price'] + '¢'
-    document.getElementById('row-5-distance').innerText = gasStations[e].dist + 'm'
+      markers = new mapboxgl.Marker({
+        color: colors[1],
+        draggable: false, 
+    })
+
+     markers.setLngLat([gasStations[b].lon, gasStations[b].lat])
+     .addTo(map);
+     marker_list.push(markers)
+    } catch {
+      document.getElementById('row-2-name').innerText = 'no option found'
+      document.getElementById('row-2-address').innerText = 'n/a'
+      document.getElementById('row-2-price').innerText = 'n/a'
+      document.getElementById('row-2-distance').innerText = 'n/a'
+    }
+
+    try{
+      document.getElementById('row-3-name').innerText = gasStations[c].name
+      document.getElementById('row-3-address').innerText = gasStations[c].address
+      document.getElementById('row-3-price').innerText = data[2]['price'] + '¢'
+      document.getElementById('row-3-distance').innerText = gasStations[c].dist + 'm'
+
+      markers = new mapboxgl.Marker({
+        color: colors[2],
+        draggable: false, 
+    })
+
+     markers.setLngLat([gasStations[c].lon, gasStations[c].lat])
+     .addTo(map);
+     marker_list.push(markers)
+    }catch{
+      document.getElementById('row-3-name').innerText = 'no option found'
+      document.getElementById('row-3-address').innerText = 'n/a'
+      document.getElementById('row-3-price').innerText = 'n/a'
+      document.getElementById('row-3-distance').innerText = 'n/a'
+    }
+
+    try{
+      document.getElementById('row-4-name').innerText = gasStations[d].name
+      document.getElementById('row-4-address').innerText = gasStations[d].address
+      document.getElementById('row-4-price').innerText = data[3]['price'] + '¢'
+      document.getElementById('row-4-distance').innerText = gasStations[d].dist + 'm'
+
+      markers = new mapboxgl.Marker({
+        color: colors[3],
+        draggable: false, 
+    })
+
+     markers.setLngLat([gasStations[d].lon, gasStations[d].lat])
+     .addTo(map);
+     marker_list.push(markers)
+    }catch{
+      document.getElementById('row-4-name').innerText = 'no option found'
+      document.getElementById('row-4-address').innerText = 'n/a'
+      document.getElementById('row-4-price').innerText = 'n/a'
+      document.getElementById('row-4-distance').innerText = 'n/a'
+    }
+
+    try{
+      document.getElementById('row-5-name').innerText = gasStations[e].name
+      document.getElementById('row-5-address').innerText = gasStations[e].address
+      document.getElementById('row-5-price').innerText = data[4]['price'] + '¢'
+      document.getElementById('row-5-distance').innerText = gasStations[e].dist + 'm'
+
+      markers = new mapboxgl.Marker({
+        color: colors[4],
+        draggable: false, 
+    })
+
+     markers.setLngLat([gasStations[e].lon, gasStations[e].lat])
+     .addTo(map);
+     marker_list.push(markers)
+    }catch{
+      document.getElementById('row-5-name').innerText = 'no option found'
+      document.getElementById('row-5-address').innerText = 'n/a'
+      document.getElementById('row-5-price').innerText = 'n/a'
+      document.getElementById('row-5-distance').innerText = 'n/a'
+    }
   }catch{
     verdictText.innerText = data['verdict']
 
