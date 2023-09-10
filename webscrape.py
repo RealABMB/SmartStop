@@ -134,11 +134,15 @@ def sort_list(list1, list2):
 def get_output():
     global price_list
     global index_values
+    print(price_list)
     index_values = sort_list(index_values, price_list)
     price_list.sort()
-    if float(price_list[0]) < (float(price_list[1]) - 3):
-        del price_list[0]
-        del index_values[0]
+    try:
+        if float(price_list[0]) < (float(price_list[1]) - 3):
+            del price_list[0]
+            del index_values[0]
+    except:
+        pass
         
     global first_option
     global second_option
