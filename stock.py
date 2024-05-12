@@ -1,8 +1,6 @@
 from datetime import datetime, timedelta
-import pytz
 def predict_stock():
-    est = pytz.timezone('US/Eastern')
-    current_day = datetime.now(est) 
+    current_day = datetime.now() 
     print(current_day)
     dt = current_day + timedelta(1)
     dayofweek = dt.weekday()
@@ -17,27 +15,25 @@ def predict_stock():
         headers = {'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:76.0) Gecko/20100101 Firefox/76.0'}
         values = []
 
-        response = requests.get(f'https://www.marketwatch.com/investing/future/cl.1/download-data?mod=mw_quote_tab', headers=headers)
+        response = requests.get(f'https://finance.yahoo.com/quote/CL%3DF/history', headers=headers)
         soup = BeautifulSoup(response.content, 'html.parser')
-        date_shown = soup.find_all("div", {'class': 'cell__content u-secondary'}, limit=1)
-        prices = soup.find_all("td", {'class': 'overflow__cell'}, limit=15)
-        date_shown = (date_shown[0].text)
-        date_shown = datetime.strptime(date_shown, '%m/%d/%Y').date()
+        content = soup.find_all("td", {'class': 'svelte-ta1t6m'}, limit=20)
+        date_shown = (content[0].text)
+        date_shown = date_shown.replace(',', '')
+        date_shown = datetime.strptime(date_shown, '%b %d %Y').date()
 
-        for objects in prices:
+        for objects in content:
             values.append(objects.text)
 
-        print(date_shown)
-        print(current_day.date())
         if date_shown == current_day.date():
-            value_1 = values[14]
-            value_2 = values[9]
+            value_1 = values[19]
+            value_2 = values[12]
         else:
-            value_1 = values[9]
-            value_2 = values[4]
+            value_1 = values[12]
+            value_2 = values[5]
 
-        value_1 = value_1.split('$', 1)[1]
-        value_2 = value_2.split('$', 1)[1]
+        #value_1 = value_1.split('$', 1)[1]
+        #value_2 = value_2.split('$', 1)[1]
         value_1 = float(value_1)
         value_2 = float(value_2)
         print(value_1, value_2)
