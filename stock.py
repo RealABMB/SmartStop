@@ -17,7 +17,7 @@ def predict_stock():
 
         response = requests.get(f'https://finance.yahoo.com/quote/CL%3DF/history', headers=headers)
         soup = BeautifulSoup(response.content, 'html.parser')
-        content = soup.find_all("td", {'class': 'svelte-ta1t6m'}, limit=20)
+        content = soup.find_all("td", limit=20)
         date_shown = (content[0].text)
         date_shown = date_shown.replace(',', '')
         date_shown = datetime.strptime(date_shown, '%b %d %Y').date()
