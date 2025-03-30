@@ -19,10 +19,10 @@ if (window.innerHeight < 500 || window.innerWidth < 1000){
 }else{
   instructionsVariable = true
 }
-gas_accessToken = "KYrBJ6gHSpRdmh8jAiJOhqS1dDCMo5H4 " 
+gas_accessToken = "" 
 
 mapboxgl.accessToken =
-  "pk.eyJ1IjoibGlscGVzaCIsImEiOiJjbDFvN2oxY2MwNDZpM2p1aXFlZ3M1bXZxIn0.-gV7jGrALXS7PCVi3qjfsw"
+  ""
 
 navigator.geolocation.getCurrentPosition(successLocation, errorLocation, {
   enableHighAccuracy: true
